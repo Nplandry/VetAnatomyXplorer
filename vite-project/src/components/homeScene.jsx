@@ -1,44 +1,54 @@
-// src/components/ThreeScene.js
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls }  from '@react-three/drei';
-import { useState } from 'react';
+import { OrbitControls } from '@react-three/drei';
+import { Box } from './Box'
 
 export const ThreeScene = () => {
-  const boxRef = useRef(false);
-  const [hovered, setHovered] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  
-function setColor(){
-  if(!hovered){setHovered(true)} else {setHovered(false)}
-  if(!menuOpen){setMenuOpen(true)} else {setMenuOpen(false)}
-}
+  const boxes = [
+    { id: 0, color: 'red', info: 'Este Cubo es rojo' },
+    { id: 1, color: 'green', info: 'Este Cubo es verde' },
+    { id: 2, color: 'pink', info: 'Este Cubo es azul' },
+  ];
 
-function closeMenu(){
-  if(hovered){setHovered(false)} else {setHovered(true)}
-  if(menuOpen){setMenuOpen(false)} else {setMenuOpen(true)}
+  const [selectedBox, setSelectedBox] = useState(null);
+  const [hovered, setHovered] = useState(false)
 
-  const boxArr = [
-    {id: 1}, {id: 2}, {id: 3}
-  ]
-}
+
+  const handleBoxClick = (id) => {
+    setSelectedBox(id);
+    if(hovered){
+      setHovered(false)
+    } else {
+      setHovered(true)
+    }
+  };
+
+  const closeMenu = () => {
+    setSelectedBox(null);
+    if(hovered){
+      setHovered(false)
+    } else {
+      setHovered(true)
+    }
+  };
 
   return (
     <>
-    <div className='modelInfo'  style={{ display: menuOpen ? 'flex' : 'none' }}>
-      <h2>Información del Modelo 3D</h2>
-      <p>Este Cubo es rojo</p>
-      <button onClick={closeMenu}>Cerrar</button>
-    </div>
-    <Canvas>
-        <ambientLight intensity={0.5}/>
-        <directionalLight position={[2, 2, 2]}/>
+      <div className='modelInfo' style={{ display: selectedBox !== null ? 'flex' : 'none' }}>
+        <h2>Información del Modelo 3D</h2>
+        {selectedBox !== null && (
+          <p>{`ID ${selectedBox}: ${boxes.find((box) => box.id === selectedBox)?.info}`}</p>
+        )}
+        <button onClick={closeMenu}>Cerrar</button>
+      </div>
+      <Canvas>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
-      <mesh ref={boxRef} onClick={setColor} position={[0, 0, 0]}>
-        <boxGeometry />
-        <meshStandardMaterial color={menuOpen ? "red" : "white"}/>
-      </mesh>
-    </Canvas>
+        {boxes.map((box) => (
+          <Box key={box.id} {...box} onClick={() => handleBoxClick(box.id)} color={hovered ? "blue" : box.color}/>
+        ))}
+      </Canvas>
     </>
   );
 };
