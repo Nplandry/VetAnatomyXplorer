@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { Box } from './Box'
+import { Box } from './Box';
 
 export const ThreeScene = () => {
   const initialBoxes = [
@@ -9,10 +9,10 @@ export const ThreeScene = () => {
     { id: 2, color: 'green', info: 'Este Cubo es verde' },
     { id: 3, color: 'blue', info: 'Este Cubo es azul' },
   ];
-  
 
   const [selectedBoxes, setSelectedBoxes] = useState([]);
-  const [selectedBox, setSelectedBox] = useState(null)
+  const [hiddenBoxes, setHiddenBoxes] = useState([]);
+  const [selectedBox, setSelectedBox] = useState(null);
 
   const handleBoxClick = (id) => {
     setSelectedBoxes((prevSelectedBoxes) => {
@@ -22,26 +22,30 @@ export const ThreeScene = () => {
       } else {
         // Seleccionar si no estaba seleccionado
         return [...prevSelectedBoxes, id];
-        
       }
-      
+    });
+
+    if (selectedBoxes.length <= 1) {
+      setSelectedBox(true);
     }
-    );
-    if(selectedBoxes.length <= 1){
-     setSelectedBox(true) 
-    }
-    if(selectedBox){
-      setSelectedBox(null)
+
+    if (selectedBox) {
+      setSelectedBox(null);
     }
   };
 
   const closeMenu = () => {
     setSelectedBoxes([]);
-    console.log(selectedBoxes.length)
-    setSelectedBox(null)
+    console.log(selectedBoxes.length);
+    setSelectedBox(null);
   };
 
+  const hideBox = () => {
+    setHiddenBoxes([...hiddenBoxes, ...selectedBoxes]);
+    setSelectedBoxes([]);
+  };
 
+  const isBoxHidden = (id) => hiddenBoxes.includes(id);
 
   return (
     <>
@@ -50,19 +54,27 @@ export const ThreeScene = () => {
         {selectedBoxes.map((selectedId) => (
           <p key={selectedId}>{`ID ${selectedId}: ${initialBoxes[selectedId - 1].info}`}</p>
         ))}
-        <button onClick={closeMenu}>Cerrar</button>
+        <div className='btns'>
+          <button onClick={closeMenu}>Cerrar</button>
+          <button className='btn-hidden' onClick={hideBox}>
+            Ocultar
+          </button>
+          <button>Mostrar</button>
+        </div>
       </div>
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
         {initialBoxes.map((box) => (
-          <Box
-            key={box.id}
-            {...box}
-            isSelected={selectedBoxes.includes(box.id)}
-            onClick={handleBoxClick}
-          />
+          !isBoxHidden(box.id) && (
+            <Box
+              key={box.id}
+              {...box}
+              isSelected={selectedBoxes.includes(box.id)}
+              onClick={handleBoxClick}
+            />
+          )
         ))}
       </Canvas>
     </>
