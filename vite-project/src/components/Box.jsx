@@ -1,8 +1,8 @@
 import React from 'react'
 
-export const Box = ({ id, color, onClick }) => (
-    <mesh onClick={onClick} position={[id * 2, 0, 0]}>
+export const Box = ({ id, color, onClick, isSelected }) => (
+    <mesh onClick={() => onClick(id)} position={[id * 2, 0, 0]}>
       <boxGeometry />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial color={isSelected ? 'yellow' : color} />
     </mesh>
   );

@@ -9,5 +9,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+       // Aplicar o quitar la clase 'no-selection' al hacer clic izquierdo
+    document.addEventListener('mousedown', function (e) {
+      if (e.button === 0) {
+        document.body.classList.add('no-selection');
+      }
+    });
+
+    // Restaurar la clase 'no-selection' al soltar el clic izquierdo
+    document.addEventListener('mouseup', function (e) {
+      if (e.button === 0) {
+        document.body.classList.remove('no-selection');
+      }
+    });
+    </script>
   </body>
 </html>

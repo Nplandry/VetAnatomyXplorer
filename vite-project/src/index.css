@@ -15,39 +15,39 @@ html, body {
 }
 .modelInfo {
   display: flex;
-  flex-direction: column; /* Cambiado a columna para que los elementos se apilen verticalmente */
-  width: 300px; /* Reducido el ancho para adaptarse mejor a la mayoría de las pantallas */
-  max-height: 400px; /* Limitado la altura para que no sea muy grande */
+  flex-direction: column; 
+  width: 300px; 
+  max-height: 400px; 
   position: absolute;
-  background-color: #f0f8ff; /* Cambiado a un tono más claro de azul */
-  right: 170px; /* Ajustado el margen derecho */
-  bottom: 400px; /* Ajustado el margen inferior */
-  border: 1px solid #4682b4; /* Añadido un borde para resaltar el cuadro */
+  background-color: #f0f8ff; 
+  right: 170px; 
+  bottom: 400px; 
+  border: 1px solid #4682b4; 
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1; /* Asegurando que esté en la parte superior de otros elementos */
+  z-index: 1; 
 }
 
 .modelInfo h2 {
   margin: 0;
   padding: 10px;
-  background-color: #87ceeb; /* Cambiado a un tono más oscuro de azul */
-  border-bottom: 1px solid #4682b4; /* Añadido un borde inferior */
+  background-color: #87ceeb; 
+  border-bottom: 1px solid #4682b4;
   text-align: center;
 }
 
 .modelInfo p {
-  flex-grow: 1; /* Haciendo que ocupe el espacio restante */
+  flex-grow: 1; 
   padding: 10px;
   margin: 0;
-  background-color: #f0f8ff; /* Igual al fondo del contenedor para eliminar el margen de fondo */
+  background-color: #f0f8ff; 
 }
 
 .modelInfo button {
-  margin-top: 10px; /* Añadido margen superior al botón */
+  margin-top: 10px; 
   padding: 10px;
-  background-color: #4682b4; /* Cambiado a un tono más oscuro de azul */
-  color: #fff; /* Texto en blanco para mayor contraste */
+  background-color: #4682b4; 
+  color: #fff; 
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -59,18 +59,24 @@ html, body {
 }
 
 .modelInfo button:hover {
-  background-color: #357ebd; /* Cambiado a un tono más oscuro al pasar el ratón */
+  background-color: #357ebd; 
 }
 
 .header {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   display: flex;
-  flex-direction: column; /* Cambiado a columna para que los elementos se apilen verticalmente */
-  width: 300px; /* Reducido el ancho para adaptarse mejor a la mayoría de las pantallas */
+  flex-direction: column; 
+  width: 300px; 
   position: absolute;
   background-color: none;
   border-radius: 8px;
-  z-index: 1; /* Asegurando que esté en la parte superior de otros elementos */
+  z-index: 1; 
   top: 0;
   left: 30px;
+}
+.no-selection {
+  user-select: none; 
+  -moz-user-select: none; 
+  -webkit-user-select: none; 
+  -ms-user-select: none; 
 }
