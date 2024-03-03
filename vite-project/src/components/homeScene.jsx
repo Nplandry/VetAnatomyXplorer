@@ -9,6 +9,7 @@ export const ThreeScene = () => {
     { id: 2, color: 'green', info: 'Este Cubo es verde' },
     { id: 3, color: 'blue', info: 'Este Cubo es azul' },
   ];
+  
 
   const [selectedBoxes, setSelectedBoxes] = useState([]);
   const [selectedBox, setSelectedBox] = useState(null)
