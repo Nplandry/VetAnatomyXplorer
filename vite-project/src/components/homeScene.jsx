@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Box } from './Box';
@@ -7,12 +7,15 @@ export const ThreeScene = () => {
   const initialBoxes = [
     { id: 1, color: 'red', info: 'Este Cubo es rojo' },
     { id: 2, color: 'green', info: 'Este Cubo es verde' },
-    { id: 3, color: 'blue', info: 'Este Cubo es azul' },
+    { id: 3, color: 'blue', info: 'Este Cubo es azul' }
   ];
 
   const [selectedBoxes, setSelectedBoxes] = useState([]);
   const [hiddenBoxes, setHiddenBoxes] = useState([]);
   const [selectedBox, setSelectedBox] = useState(null);
+  const [dragging, setDragging] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 10, y: 10 }); // Ajusta la posición inicial
 
   const handleBoxClick = (id) => {
     setSelectedBoxes((prevSelectedBoxes) => {
@@ -36,20 +39,57 @@ export const ThreeScene = () => {
 
   const closeMenu = () => {
     setSelectedBoxes([]);
-    console.log(selectedBoxes.length);
     setSelectedBox(null);
   };
 
   const hideBox = () => {
     setHiddenBoxes([...hiddenBoxes, ...selectedBoxes]);
     setSelectedBoxes([]);
+    if (selectedBoxes.length === 1) {
+      setSelectedBox(null);
+    }
   };
 
   const isBoxHidden = (id) => hiddenBoxes.includes(id);
 
+  const handleMouseDown = (e) => {
+    setDragging(true);
+    setOffset({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = (e) => {
+    if (dragging) {
+      const deltaX = e.clientX - offset.x;
+      const deltaY = e.clientY - offset.y;
+
+      setOffset({ x: e.clientX, y: e.clientY });
+
+      setPosition((prevPosition) => ({
+        x: prevPosition.x + deltaX,
+        y: prevPosition.y + deltaY,
+      }));
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
   return (
     <>
-      <div className='modelInfo' style={{ display: selectedBox !== null ? 'flex' : 'none' }}>
+      <div
+        className='modelInfo'
+        style={{
+          display: selectedBox !== null ? 'flex' : 'none',
+          position: 'fixed',
+          left: position.x,
+          top: position.y,
+          cursor: dragging ? 'grabbing' : 'grab',
+        }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      >
         <h2>Información del Modelo 3D</h2>
         {selectedBoxes.map((selectedId) => (
           <p key={selectedId}>{`ID ${selectedId}: ${initialBoxes[selectedId - 1].info}`}</p>
@@ -59,7 +99,7 @@ export const ThreeScene = () => {
           <button className='btn-hidden' onClick={hideBox}>
             Ocultar
           </button>
-          <button>Mostrar</button>
+          <button>Mostrar Anterior</button>
         </div>
       </div>
       <Canvas>
@@ -73,6 +113,7 @@ export const ThreeScene = () => {
               {...box}
               isSelected={selectedBoxes.includes(box.id)}
               onClick={handleBoxClick}
+              position={[box.id * 2, 0, 0]} 
             />
           )
         ))}
