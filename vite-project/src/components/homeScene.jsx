@@ -151,8 +151,11 @@ export const ThreeScene = () => {
             <Box
               key={box.id}
               {...box}
+              {/*Si selectedBoxes contiene un cubo se envia el valor T/F en forma de prop */}
               isSelected={selectedBoxes.includes(box.id)}
+              //Se le pasa la funcion
               onClick={handleBoxClick}
+              {/*Posicion exacta de cada cubo */}
               position={[box.id * 2, 0, 0]} 
             />
           )
