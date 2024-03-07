@@ -22,6 +22,9 @@ export const ThreeScene = () => {
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 10, y: 10 }); // Ajusta la posición inicial
+  const [lastBoxes, setlastBoxes] = useState([])
+
+
 
 
 
@@ -42,6 +45,7 @@ export const ThreeScene = () => {
         return [...prevSelectedBoxes, id];
         //Si es que no llega a haber informacion en el arr, concatenale el arr de ID, todos los id en el arr de los cubos
       }
+      
     });
     //La funcion anterior es para modificar el estilo del cubo o ejecutar otro componente al clickear el cubo...
 
@@ -67,6 +71,7 @@ export const ThreeScene = () => {
   /*Botton OCULTAR. Al seleccionar concatenar al seteo del hook de la funcion su estado anterior
   y el arr correspondiente a todas las cajas seleccionadas*/
   const hideBox = () => {
+    setlastBoxes([...selectedBoxes])
     setHiddenBoxes([...hiddenBoxes, ...selectedBoxes]);
     //Setear TODAS las cajas seleccionadas en un arr vacio.
     setSelectedBoxes([]);
@@ -75,6 +80,20 @@ export const ThreeScene = () => {
       setSelectedBox(null);
     }
   };
+
+  const returnBox = () => {
+    if(hiddenBoxes.length > 1){
+      
+      setHiddenBoxes([hiddenBoxes.shift()])
+      console.log(hiddenBoxes)
+    } else {
+      setHiddenBoxes((prevHiddenBoxes) => prevHiddenBoxes.filter((hiddenId) => selectedBoxes.includes(hiddenId)))
+    }
+    
+    //setHiddenBoxes((prevHiddenBoxes) => prevHiddenBoxes.filter((hiddenId) => selectedBoxes.includes(hiddenId)));
+    setSelectedBoxes([]);
+    setSelectedBox(null);
+  }
 
   /*Constante la cual sera true or false dependiendo si el seteo de sethiddenbox EN HIDEBOX contiene un valor
   de selectedBoxes */
@@ -137,13 +156,14 @@ export const ThreeScene = () => {
             Ocultar
           </button>
           {/*PENDIENTE */}
-          <button>Mostrar Anterior</button>
+          <button onClick={returnBox}>Mostrar Anterior</button>
         </div>
       </div>
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
+        <group position={[-2.4, 0, 0]}>
         {/*Recorrer el array de cajas <=> No se a seleccionado el boton boxHidden */}
         {initialBoxes.map((box) => (
           !isBoxHidden(box.id) && (
@@ -151,15 +171,14 @@ export const ThreeScene = () => {
             <Box
               key={box.id}
               {...box}
-              {/*Si selectedBoxes contiene un cubo se envia el valor T/F en forma de prop */}
               isSelected={selectedBoxes.includes(box.id)}
-              //Se le pasa la funcion
+
               onClick={handleBoxClick}
-              {/*Posicion exacta de cada cubo */}
               position={[box.id * 2, 0, 0]} 
             />
           )
         ))}
+        </group>
       </Canvas>
     </>
   );

@@ -5,6 +5,6 @@ export const Box = ({ id, color, onClick, isSelected }) => (
   uno de los cubos se encuentra como props en la llamada del componentes */
     <mesh onClick={() => onClick(id)} position={[id * 1.2, 0, 0]}>
       <boxGeometry />
-      <meshStandardMaterial color={isSelected ? 'yellow' : color} />
+      <meshStandardMaterial color={color} opacity={isSelected ? "0.6" : "1"} transparent />
     </mesh>
   );
