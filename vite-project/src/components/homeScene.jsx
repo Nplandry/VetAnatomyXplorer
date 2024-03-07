@@ -12,7 +12,9 @@ export const ThreeScene = () => {
 
     { id: 1, color: 'red', info: 'Este Cubo es rojo' },
     { id: 2, color: 'green', info: 'Este Cubo es verde' },
-    { id: 3, color: 'blue', info: 'Este Cubo es azul' }
+    { id: 3, color: 'blue', info: 'Este Cubo es azul' },
+    { id: 4, color: 'pink', info: 'Este Cubo es azul' },
+    { id: 5, color: 'yellow', info: 'Este Cubo es azul' }
 
   ];
 
