@@ -158,14 +158,15 @@ export const ThreeScene = () => {
           <button className='btn-hidden' onClick={hideBox}>
             Ocultar
           </button>
-          {/*PENDIENTE */}
           <button onClick={returnBox}>Mostrar Anterior</button>
         </div>
       </div>
+      
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
+        
         <group position={[-2.4, 0, 0]}>
         {/*Recorrer el array de cajas <=> No se a seleccionado el boton boxHidden */}
         {initialBoxes.map((box) => (
