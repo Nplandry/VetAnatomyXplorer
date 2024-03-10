@@ -6,6 +6,7 @@ import { OrbitControls } from '@react-three/drei';
 
 import { Box } from './Box';
 
+
 export const ThreeScene = () => {
 
   const initialBoxes = [
@@ -178,9 +179,13 @@ export const ThreeScene = () => {
               onClick={handleBoxClick}
               position={[box.id * 2, 0, 0]} 
             />
+            
           )
-        ))}
+          
+        )
+        )}
         </group>
+        
       </Canvas>
     </>
   );
