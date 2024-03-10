@@ -3,19 +3,16 @@ import React, { useState, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 
 import { OrbitControls } from '@react-three/drei';
+import { Model } from './Model';
 
-import { Box } from './Box';
+//import { Box } from './Box';
 
 
 export const ThreeScene = () => {
 
   const initialBoxes = [
 
-    { id: 1, color: 'red', info: 'Este Cubo es rojo' },
-    { id: 2, color: 'green', info: 'Este Cubo es verde' },
-    { id: 3, color: 'blue', info: 'Este Cubo es azul' },
-    { id: 4, color: 'pink', info: 'Este Cubo es azul' },
-    { id: 5, color: 'yellow', info: 'Este Cubo es azul' }
+    { id: 1, color: 'red', info: 'Este es un perro' }
 
   ];
 
@@ -126,7 +123,7 @@ export const ThreeScene = () => {
     setDragging(false);
   };
 
-  //Retorno del componente
+  //Retorno del componente*/
   return (
     <>
       <div
@@ -146,7 +143,7 @@ export const ThreeScene = () => {
         onMouseUp={handleMouseUp}
         /*Fin de los comandos ligados a la movilidad del contenedor MENU*/
       >
-        <h2>Información del Modelo 3D</h2>
+        <h2>VetAnatomyXplorer</h2>
         {/*Informacion dentro del contenedor */}
         {selectedBoxes.map((selectedId) => (
           <p key={selectedId}>{`ID ${selectedId}: ${initialBoxes[selectedId - 1].info}`}</p>
@@ -161,32 +158,29 @@ export const ThreeScene = () => {
           <button onClick={returnBox}>Mostrar Anterior</button>
         </div>
       </div>
-      
       <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
         
-        <group position={[-2.4, 0, 0]}>
-        {/*Recorrer el array de cajas <=> No se a seleccionado el boton boxHidden */}
-        {initialBoxes.map((box) => (
-          !isBoxHidden(box.id) && (
-            /*Si se ejecuta el mapeo... */
-            <Box
-              key={box.id}
-              {...box}
-              isSelected={selectedBoxes.includes(box.id)}
 
-              onClick={handleBoxClick}
-              position={[box.id * 2, 0, 0]} 
-            />
+        <group position={[0, 0, 0]}>
+          {initialBoxes.map((box) => (
+            !isBoxHidden(box.id) && (
+              <React.Fragment key={box.id}>
+                <Model
+                  id={box.id}
+                  isSelected={selectedBoxes.includes(box.id)}
+                  onClick={handleBoxClick}
+                  
+                />
+                
+              </React.Fragment>
+              
+            )
             
-          )
-          
-        )
-        )}
-        </group>
-        
+          ))}
+        </group>     
       </Canvas>
     </>
   );
