@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 import { Canvas } from '@react-three/fiber';
 
-import { OrbitControls } from '@react-three/drei';
+import { Box, OrbitControls } from '@react-three/drei';
 import { Model } from './Model';
 
 //import { Box } from './Box';
@@ -12,7 +12,7 @@ export const ThreeScene = () => {
 
   const initialBoxes = [
 
-    { id: 1, color: 'red', info: 'Este es un perro' }
+    { id: 1, color: 'red', info: 'Este es un perro'}
 
   ];
 
@@ -162,7 +162,12 @@ export const ThreeScene = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
-        
+        <group position={[1, -0.2, 0]}>
+          <mesh>
+          <boxGeometry args={[0.2, 0.2, 0.2]} /> {/* Ajusta los valores según tu preferencia */}
+            <meshStandardMaterial />
+          </mesh>
+        </group>
 
         <group position={[0, 0, 0]}>
           {initialBoxes.map((box) => (
@@ -180,7 +185,8 @@ export const ThreeScene = () => {
             )
             
           ))}
-        </group>     
+        </group>
+           
       </Canvas>
     </>
   );
