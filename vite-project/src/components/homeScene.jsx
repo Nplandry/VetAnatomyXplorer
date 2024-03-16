@@ -178,6 +178,7 @@ export const ThreeScene = () => {
                   isSelected={selectedBoxes.includes(box.id)}
                   onClick={handleBoxClick}
                   
+                  
                 />
                 
               </React.Fragment>
