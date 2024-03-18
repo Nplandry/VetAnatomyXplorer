@@ -193,6 +193,6 @@ export const ThreeScene = () => {
   );
 };
 
-
+//Avanzar con la adaptacion del modelo con las funciones que habia anteriormente en el box
 //Hay que hacer un algoritmo, en el cual se modifique el valor de la posicion del 
 //mesh, dandole att a la posicion y creando un obj de lox cubos
