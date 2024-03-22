@@ -12,7 +12,7 @@ export const ThreeScene = () => {
 
   const initialBoxes = [
 
-    { id: 1, color: 'red', info: 'Este es un perro'}
+    { id: 1, pos: 1, scale: 3.5 ,color: 'red', info: 'Este es un perro'}, {id: 2, pos: 3, scale: 2}
 
   ];
 
@@ -162,14 +162,14 @@ export const ThreeScene = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
-        <group position={[1, -0.2, 0]}>
+        <group position={[0, -0.2, 0]}>
           <mesh>
           <boxGeometry args={[0.2, 0.2, 0.2]} /> {/* Ajusta los valores según tu preferencia */}
             <meshStandardMaterial />
           </mesh>
         </group>
 
-        <group position={[0, 0, 0]}>
+        <group position={[-1, 0, 0]}>
           {initialBoxes.map((box) => (
             !isBoxHidden(box.id) && (
               <React.Fragment key={box.id}>
@@ -177,6 +177,8 @@ export const ThreeScene = () => {
                   id={box.id}
                   isSelected={selectedBoxes.includes(box.id)}
                   onClick={handleBoxClick}
+                  pos={box.pos}
+                  scale={box.scale}
                   
                   
                 />
