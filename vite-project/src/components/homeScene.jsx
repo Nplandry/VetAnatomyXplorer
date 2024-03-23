@@ -162,14 +162,9 @@ export const ThreeScene = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
-        <group position={[0, -0.2, 0]}>
-          <mesh>
-          <boxGeometry args={[0.2, 0.2, 0.2]} /> {/* Ajusta los valores según tu preferencia */}
-            <meshStandardMaterial />
-          </mesh>
-        </group>
+        
 
-        <group position={[-1, 0, 0]}>
+        <group position={[-4, 0, 0]}>
           {initialBoxes.map((box) => (
             !isBoxHidden(box.id) && (
               <React.Fragment key={box.id}>
