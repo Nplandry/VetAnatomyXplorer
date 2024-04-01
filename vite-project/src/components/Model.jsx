@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGLTF } from '@react-three/drei';
 
-export function Model({ id, scale, onClick, isSelected, ...props }) {
+export function Model({ id, color, scale, onClick, isSelected, ...props }) {
   const { nodes, materials } = useGLTF('/scene-processed.gltf');
 
   return (

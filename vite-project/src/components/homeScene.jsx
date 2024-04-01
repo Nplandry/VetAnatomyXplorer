@@ -5,8 +5,8 @@ import { Model } from './Model';
 
 export const ThreeScene = () => {
   const initialBoxes = [
-    { id: 1, scale: 3.5, color: 'red', info: 'Este es un perro' },
-    { id: 2, scale: 3.5, info: 'Este es el perro por dentro' }
+    { id: 1, scale: 3.5, color: 'red', info: 'Este es un perro', color: "none" },
+    { id: 2, scale: 3.5, info: 'Este es el perro por dentro', color: "white" }
   ];
 
   const [selectedBoxes, setSelectedBoxes] = useState([]);
@@ -123,6 +123,7 @@ export const ThreeScene = () => {
                   isSelected={selectedBoxes.includes(box.id)}
                   onClick={handleBoxClick}
                   scale={box.scale}
+                  color={box.color}
                 />
               </React.Fragment>
             )
