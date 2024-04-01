@@ -1,3 +1,5 @@
+//Este es el mode de un cubo aplicado a las funciones de la aplicacion
+
 import React from 'react'
 
 export const Box = ({ id, color, onClick, isSelected }) => (

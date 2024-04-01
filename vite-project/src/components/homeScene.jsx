@@ -1,21 +1,12 @@
-import React, { useState, useRef } from 'react';
-
+import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-
-import { Box, OrbitControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Model } from './Model';
 
-//import { Box } from './Box';
-
-
 export const ThreeScene = () => {
-
   const initialBoxes = [
-
-    { id: 1, scale: 3.5 ,color: 'red', info: 'Este es un perro'}, 
-    {id: 2, scale: 2, info: 'Este es el perro por dentro'
-    }
-
+    { id: 1, scale: 3.5, color: 'red', info: 'Este es un perro' },
+    { id: 2, scale: 3.5, info: 'Este es el perro por dentro' }
   ];
 
   const [selectedBoxes, setSelectedBoxes] = useState([]);
@@ -23,87 +14,57 @@ export const ThreeScene = () => {
   const [selectedBox, setSelectedBox] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x: 10, y: 10 }); // Ajusta la posición inicial
-  const [lastBoxes, setlastBoxes] = useState([])
+  const [position, setPosition] = useState({ x: 10, y: 10 }); 
 
-
-
-
-
-  //si clickean un cubo, activa la funcion handleboxclick pasando un parametro como "id"
   const handleBoxClick = (id) => {
-
     setSelectedBoxes((prevSelectedBoxes) => {
-
       if (prevSelectedBoxes.includes(id)) {
-
         return prevSelectedBoxes.filter((selectedId) => selectedId !== id);
-
-       /*EJ: si esta seleccionado "A" y ahora selecciono "B", borrale "A" */
-
       } else {
-        
         return [...prevSelectedBoxes, id];
       }
     });
-  
 
+    if (!selectedBoxes.length || id < Math.min(...selectedBoxes)) {
+      setSelectedBoxes([id]);
+    }
 
-    //Si al clickear un cubo es 1 o menos. Indica que se setio un cubo
-    if (selectedBoxes.length <= 1) {
-      setSelectedBox(true);
-    }
-    //Si al hacer click habia un cubo seteado de antes, pasa su estado a nulo
-    if (selectedBox) {
-      setSelectedBox(null);
-    }
+    setSelectedBox(true);
   };
 
-//Boton CERRAR. Al seleccionar, setear todas las cajas seleccionadas a un arr vacio
   const closeMenu = () => {
     setSelectedBoxes([]);
-
-    //Setear la caja UNICA seleccionada en nulo o arr vacio tambien
     setSelectedBox(null);
   };
 
-  /*Botton OCULTAR. Al seleccionar concatenar al seteo del hook de la funcion su estado anterior
-  y el arr correspondiente a todas las cajas seleccionadas*/
   const hideBox = () => {
-    setlastBoxes([...selectedBoxes])
     setHiddenBoxes([...hiddenBoxes, ...selectedBoxes]);
-    //Setear TODAS las cajas seleccionadas en un arr vacio.
     setSelectedBoxes([]);
-    //Si solo hemos seleccionado una caja, seteala en nulo o arr vacio
     if (selectedBoxes.length === 1) {
       setSelectedBox(null);
     }
   };
 
   const returnBox = () => {
-    if(hiddenBoxes.length > 1){
-      
-      setHiddenBoxes([hiddenBoxes.shift()])
-      console.log(hiddenBoxes)
+    if (hiddenBoxes.length > 1) {
+      setHiddenBoxes([hiddenBoxes.shift()]);
     } else {
-      setHiddenBoxes((prevHiddenBoxes) => prevHiddenBoxes.filter((hiddenId) => selectedBoxes.includes(hiddenId)))
+      setHiddenBoxes((prevHiddenBoxes) =>
+        prevHiddenBoxes.filter((hiddenId) => selectedBoxes.includes(hiddenId))
+      );
     }
-    
-    //setHiddenBoxes((prevHiddenBoxes) => prevHiddenBoxes.filter((hiddenId) => selectedBoxes.includes(hiddenId)));
+
     setSelectedBoxes([]);
     setSelectedBox(null);
-  }
+  };
 
-  /*Constante la cual sera true or false dependiendo si el seteo de sethiddenbox EN HIDEBOX contiene un valor
-  de selectedBoxes */
-  const isBoxHidden = (id) => hiddenBoxes.includes(id);//Si es false da la libertad de renderizar los cubos junto a los hooks
+  const isBoxHidden = (id) => hiddenBoxes.includes(id);
 
-  //Ligado a pantalla flotante
   const handleMouseDown = (e) => {
     setDragging(true);
     setOffset({ x: e.clientX, y: e.clientY });
   };
-//Ligado a pantalla flotante
+
   const handleMouseMove = (e) => {
     if (dragging) {
       const deltaX = e.clientX - offset.x;
@@ -117,21 +78,17 @@ export const ThreeScene = () => {
       }));
     }
   };
-  //Ligado a pantalla flotante
+
   const handleMouseUp = () => {
     setDragging(false);
   };
-  let contador = 0;
-  //Retorno del componente*/
+
   return (
     <>
       <div
         className='modelInfo'
         style={{
-          /*Si selectedBox esta en true, agrega un estilo con display flex. Si es false
-          Display none*/
           display: selectedBox !== null ? 'flex' : 'none',
-          /*Ligado a la movilidad del contenedor del menu */
           position: 'fixed',
           left: position.x,
           top: position.y,
@@ -140,17 +97,13 @@ export const ThreeScene = () => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        /*Fin de los comandos ligados a la movilidad del contenedor MENU*/
       >
         <h2>VetAnatomyXplorer</h2>
-        {/*Informacion dentro del contenedor */}
         {selectedBoxes.map((selectedId) => (
           <p key={selectedId}>{`ID ${selectedId}: ${initialBoxes[selectedId - 1].info}`}</p>
         ))}
         <div className='btns'>
-          {/*Al clickear boton activar la funcion closeMenu */}
           <button onClick={closeMenu}>Cerrar</button>
-          {/*Al clickear boton activar la funcion hideBox */}
           <button className='btn-hidden' onClick={hideBox}>
             Ocultar
           </button>
@@ -161,8 +114,6 @@ export const ThreeScene = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
-        
-
         <group position={[-4, 0, 0]}>
           {initialBoxes.map((box) => (
             !isBoxHidden(box.id) && (
@@ -172,22 +123,12 @@ export const ThreeScene = () => {
                   isSelected={selectedBoxes.includes(box.id)}
                   onClick={handleBoxClick}
                   scale={box.scale}
-                  
-                  
                 />
-                
               </React.Fragment>
-              
             )
-            
           ))}
         </group>
-           
       </Canvas>
     </>
   );
 };
-
-//Avanzar con la adaptacion del modelo con las funciones que habia anteriormente en el box
-//Hay que hacer un algoritmo, en el cual se modifique el valor de la posicion del 
-//mesh, dandole att a la posicion y creando un obj de lox cubos
