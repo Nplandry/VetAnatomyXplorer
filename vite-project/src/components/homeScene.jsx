@@ -12,7 +12,8 @@ export const ThreeScene = () => {
 
   const initialBoxes = [
 
-    { id: 1, pos: 1, scale: 3.5 ,color: 'red', info: 'Este es un perro'}, {id: 2, pos: 1, scale: 2, info: 'Este es el perro por dentro'
+    { id: 1, scale: 3.5 ,color: 'red', info: 'Este es un perro'}, 
+    {id: 2, scale: 2, info: 'Este es el perro por dentro'
     }
 
   ];
@@ -32,23 +33,20 @@ export const ThreeScene = () => {
   //si clickean un cubo, activa la funcion handleboxclick pasando un parametro como "id"
   const handleBoxClick = (id) => {
 
-    //Cambia el estado del hook. Era array y ahora el contenido de la funcion...
-
     setSelectedBoxes((prevSelectedBoxes) => {
-      //Si previamente el hook incluia algun parametro id...
-      if (prevSelectedBoxes.includes(id)) {
-        // Deseleccionar si ya estaba seleccionado
-        //Filtra todos los id que no correspondan al id del box clickeado
-        return prevSelectedBoxes.filter((selectedId) => selectedId !== id);
-      } else {
-        // Seleccionar si no estaba seleccionado
 
+      if (prevSelectedBoxes.includes(id)) {
+
+        return prevSelectedBoxes.filter((selectedId) => selectedId !== id);
+
+       /*EJ: si esta seleccionado "A" y ahora selecciono "B", borrale "A" */
+
+      } else {
+        
         return [...prevSelectedBoxes, id];
-        //Si es que no llega a haber informacion en el arr, concatenale el arr de ID, todos los id en el arr de los cubos
       }
-      
     });
-    //La funcion anterior es para modificar el estilo del cubo o ejecutar otro componente al clickear el cubo...
+  
 
 
     //Si al clickear un cubo es 1 o menos. Indica que se setio un cubo
@@ -123,7 +121,7 @@ export const ThreeScene = () => {
   const handleMouseUp = () => {
     setDragging(false);
   };
-
+  let contador = 0;
   //Retorno del componente*/
   return (
     <>
@@ -173,7 +171,6 @@ export const ThreeScene = () => {
                   id={box.id}
                   isSelected={selectedBoxes.includes(box.id)}
                   onClick={handleBoxClick}
-                  pos={box.pos}
                   scale={box.scale}
                   
                   
