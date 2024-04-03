@@ -134,3 +134,5 @@ export const ThreeScene = () => {
     </>
   );
 };
+
+//Arreglar Bug de seleccion
