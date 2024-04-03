@@ -12,10 +12,7 @@ export function Model({ id, color, scale, onClick, isSelected, ...props }) {
           {isSelected && (
               <meshLambertMaterial opacity={isSelected ? "0.9" : "1"} transparent color="#ccc"/>
           )
-          }
-          {id !== 1 && (
-            <meshPhysicalMaterial />
-          )}
+}
         </mesh>
       </group>
     </group>
