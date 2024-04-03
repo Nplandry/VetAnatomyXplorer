@@ -4,19 +4,28 @@ import { OrbitControls } from '@react-three/drei';
 import { Model } from './Model';
 
 export const ThreeScene = () => {
+
+
   const initialBoxes = [
     { id: 1, scale: 3.5, info: 'Este es un perro', color: "none" },
     { id: 2, scale: 3.5, info: 'Este es el perro por dentro', color: "white" }
   ];
 
+
+
   const [selectedBoxes, setSelectedBoxes] = useState([]);
-  const [hiddenBoxes, setHiddenBoxes] = useState([]);
-  const [selectedBox, setSelectedBox] = useState(null);
+  const [modelDeleterecord, setModelDelRecord] = useState([]);
+  const [ViewMenu, setViewMenu] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 10, y: 10 }); 
 
+
+
+
+  //Funcion MAIN
   const handleBoxClick = (id) => {
+
     setSelectedBoxes((prevSelectedBoxes) => {
       if (prevSelectedBoxes.includes(id)) {
         return prevSelectedBoxes.filter((selectedId) => selectedId !== id);
@@ -30,37 +39,45 @@ export const ThreeScene = () => {
       //Seteale SOLO el id
       setSelectedBoxes([...id]);
     }
-    setSelectedBox(true);
+    setViewMenu(true);
   };
+  //Termino handelboxClick
 
+
+
+  //Funciones para el menu
   const closeMenu = () => {
     setSelectedBoxes([]);
-    setSelectedBox(null);
+    setViewMenu(null);
   };
 
   const hideBox = () => {
-    setHiddenBoxes([...hiddenBoxes, ...selectedBoxes]);
+    setModelDelRecord([...modelDeleterecord, ...selectedBoxes]);
     setSelectedBoxes([]);
     if (selectedBoxes.length === 1) {
-      setSelectedBox(null);
+      setViewMenu(null);
     }
   };
 
-  const returnBox = () => {
-    if (hiddenBoxes.length > 1) {
-      setHiddenBoxes([hiddenBoxes.shift()]);
+  const returnModel = () => {
+    if (modelDeleterecord.length > 1) {
+      setModelDelRecord([modelDeleterecord.shift()]);
     } else {
-      setHiddenBoxes((prevHiddenBoxes) =>
+      setModelDelRecord((prevHiddenBoxes) =>
         prevHiddenBoxes.filter((hiddenId) => selectedBoxes.includes(hiddenId))
       );
     }
 
     setSelectedBoxes([]);
-    setSelectedBox(null);
+    setViewMenu(null);
   };
 
-  const isBoxHidden = (id) => hiddenBoxes.includes(id);
+  const isBoxHidden = (id) => modelDeleterecord.includes(id);
+//Termino de funciones para el menu flotante
 
+
+
+//Funciones para la configuracion del menu flotante (Para que pueda flotar)
   const handleMouseDown = (e) => {
     setDragging(true);
     setOffset({ x: e.clientX, y: e.clientY });
@@ -84,12 +101,15 @@ export const ThreeScene = () => {
     setDragging(false);
   };
 
+  //Termino de funciones para el funcionamiento del menu flotante (Para que pueda flotar)
+
+
   return (
     <>
       <div
         className='modelInfo'
         style={{
-          display: selectedBox !== null ? 'flex' : 'none',
+          display: ViewMenu !== null ? 'flex' : 'none',
           position: 'fixed',
           left: position.x,
           top: position.y,
@@ -108,7 +128,7 @@ export const ThreeScene = () => {
           <button className='btn-hidden' onClick={hideBox}>
             Ocultar
           </button>
-          <button onClick={returnBox}>Mostrar Anterior</button>
+          <button onClick={returnModel}>Mostrar Anterior</button>
         </div>
       </div>
       <Canvas>
@@ -135,4 +155,4 @@ export const ThreeScene = () => {
   );
 };
 
-//Arreglar Bug de seleccion
+//*Arreglar Bug de seleccion
