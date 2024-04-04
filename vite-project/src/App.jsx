@@ -4,6 +4,7 @@ import { ThreeScene } from './components/homeScene';
 
 
 const App = () => {
+  //RE-nombrar y direccionar libreriras
   return (
     <>
     <header className='header'>
