@@ -12,7 +12,6 @@ export const ThreeScene = () => {
   ];
 
 
-
   const [selectedBoxes, setSelectedBoxes] = useState([]);
   const [modelDeleterecord, setModelDelRecord] = useState([]);
   const [ViewMenu, setViewMenu] = useState(null);
@@ -120,7 +119,7 @@ export const ThreeScene = () => {
       >
         <h2>VetAnatomyXplorer</h2>
         {selectedBoxes.map((selectedId) => (
-          <p key={selectedId}>{`ID ${selectedId}: ${initialBoxes[selectedId - 1].info}`}</p>
+          <p key={selectedId}>{`ID ${selectedId}: ${"++", initialBoxes[selectedId - 1].info}`}</p>
         ))}
         <div className='btns'>
           <button onClick={closeMenu}>Cerrar</button>
@@ -135,7 +134,7 @@ export const ThreeScene = () => {
         <directionalLight position={[2, 2, 2]} />
         <OrbitControls />
         <group position={[-4, 0, 0]}>
-          {initialBoxes.map((box) => (
+          {initialBoxes.reverse().map((box) => (
             !isBoxHidden(box.id) && (
               <React.Fragment key={box.id}>
                 <Model
