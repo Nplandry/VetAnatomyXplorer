@@ -33,11 +33,10 @@ export const ThreeScene = () => {
         return [...prevSelectedBoxes, id];
       }
     });
-    console.log(selectedBoxes)
     //Si el arr esta vacio OR el id es mas pequeño que el id dentro del arr de selectedBoxes...
     if (!selectedBoxes.length || id < Math.min(...selectedBoxes)) {
       //Seteale SOLO el id
-      setSelectedBoxes([...id]);
+      setSelectedBoxes([id]);
     }
     setViewMenu(true);
   };
