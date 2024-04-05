@@ -10,7 +10,7 @@ const App = () => {
     <header className='header'>
       <div>
         <h1>VetAnatomyXplorer</h1>
-        <p>V0.0.2</p>
+        <p>Beta V0.0.1</p>
       </div>
     </header>
       <ThreeScene />

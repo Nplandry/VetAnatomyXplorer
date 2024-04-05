@@ -8,7 +8,8 @@ export const ThreeScene = () => {
 
   const initialBoxes = [
     { id: 1, scale: 3.5, info: 'Este es un perro', color: "none" },
-    { id: 2, scale: 3.5, info: 'Este es el perro por dentro', color: "white" }
+    { id: 2, scale: 3.5, info: 'Este es el perro por dentro', color: "white" },
+    { id : 3, scale: 3.5, info: 'Este es el perro mas adentro del de mas adentro', color: "none"}
   ];
 
 
