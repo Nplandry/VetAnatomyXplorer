@@ -152,5 +152,4 @@ export const ThreeScene = () => {
     </>
   );
 };
-
-//*Arreglar Bug de seleccion
+//Limpiar los reverse
