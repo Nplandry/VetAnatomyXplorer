@@ -154,3 +154,5 @@ export const ThreeScene = () => {
   );
 };
 //Limpiar los reverse
+
+//Trabajar en modelos 3d e implementar demo
